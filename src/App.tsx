@@ -1,57 +1,55 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import Slider from '@material-ui/core/Slider';
+
+console.log("RERENDER")
 
 function App() {
 
   const [red, setRed] = useState<number>(0)
   const [green, setGreen] = useState(0)
   const [blue, setBlue] = useState(0)
-  const wsClient: WebSocket = new WebSocket("ws://localhost:9999")
+  const [wsClient, setWsClient] = useState<WebSocket>()
 
-  wsClient.onmessage = (event: Event) => {
-    console.log(event);
-  };
+  useEffect(() => {
+    console.log("CRATE WEB SCOKET")
+    setWsClient(new WebSocket("ws://192.168.1.1:8765"))
+  }, [])
 
-  wsClient.onerror = (error: Event) => {
-    console.error(error)  
+  const sendMessage = () => {
+    if (wsClient!.readyState === wsClient!.OPEN) {
+      console.log("SENDING...")
+
+      wsClient!.send(`${red} ${green} ${blue}`)
+
+    }
   }
 
   const onRedChange = (event: ChangeEvent<{}>, value: number | number[]) => {
-    console.info(event)
-    console.info(value)
+    console.log(wsClient)
     setRed(value as number)
-    wsClient.send(`${red} ${green} ${blue}`)
+    sendMessage()
   }
 
 
   const onGreenChange = (event: ChangeEvent<{}>, value: number | number[]) => {
-    console.info(event)
-    console.info(value)
     setGreen(value as number)
-    wsClient.send(`${red} ${green} ${blue}`)
+    sendMessage()
   }
 
   const onBlueChange = (event: ChangeEvent<{}>, value: number | number[]) => {
-    console.info(event)
-    console.info(value)
     setBlue(value as number)
-    wsClient.send(`${red} ${green} ${blue}`)
+    sendMessage()
   }
-
-  const sendToLed = () => {
-
-  }
-
 
   return (
     <div className="App">
       <SliderBox>
-        RED: <Slider min={0} max={255} value={red} onChange={onRedChange}></Slider>
+        Green: <Slider min={0} max={255} value={red} onChange={onRedChange}></Slider>
       </SliderBox>
       <SliderBox>
-        Green: <Slider min={0} max={255} value={green} onChange={onGreenChange}></Slider>
+        Red: <Slider min={0} max={255} value={green} onChange={onGreenChange}></Slider>
       </SliderBox>
       <SliderBox>
         Blue: <Slider min={0} max={255} value={blue} onChange={onBlueChange}></Slider>
