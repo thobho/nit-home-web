@@ -8,5 +8,4 @@ fi
 #upload build
 scp -rp build/ pi@192.168.1.1:/home/pi/Projects/nit-home/nit-home-web
 #run server
-ssh root@192.168.1.1 cd /home/pi/Projects/nit-home/nit-home-web
-ssh root@192.168.1.1 npm run prod-start
+ssh root@192.168.1.1 cd /home/pi/Projects/nit-home/nit-home-web | npm run prod-start
