@@ -3,6 +3,9 @@ if [ $1 == "-c" ]; then
     ssh pi@192.168.1.1 git -C /home/pi/Projects/nit-home/nit-home-web pull
 fi
 
+#kill old process
+ssh root@192.168.1.1 killall node | killall python3
+
 #upload build
 scp -rp build/ pi@192.168.1.1:/home/pi/Projects/nit-home/nit-home-web
 
