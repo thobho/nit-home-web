@@ -7,6 +7,7 @@ console.log("RERENDER")
 
 function App() {
 
+  const LED_COUNT = 150;
   const [red, setRed] = useState<number>(0)
   const [green, setGreen] = useState(0)
   const [blue, setBlue] = useState(0)
@@ -17,30 +18,35 @@ function App() {
     setWsClient(new WebSocket("ws://192.168.1.1:8765"))
   }, [])
 
-  const sendMessage = () => {
+  const setLed = (id: number, r, g, b) => {
     if (wsClient!.readyState === wsClient!.OPEN) {
       console.log("SENDING...")
-
-      wsClient!.send(`${red} ${green} ${blue}`)
-
+      wsClient!.send(`${id} ${r} ${g} ${b}`)
     }
   }
 
   const onRedChange = (event: ChangeEvent<{}>, value: number | number[]) => {
     console.log(wsClient)
     setRed(value as number)
-    sendMessage()
+    
+    for(var i = 0 ;i<LED_COUNT; i++) {
+      setLed(i, red, green, blue);
+   }
   }
 
 
   const onGreenChange = (event: ChangeEvent<{}>, value: number | number[]) => {
     setGreen(value as number)
-    sendMessage()
+    for(var i = 0 ;i<LED_COUNT; i++) {
+      setLed(i, red, green, blue);
+   }
   }
 
   const onBlueChange = (event: ChangeEvent<{}>, value: number | number[]) => {
     setBlue(value as number)
-    sendMessage()
+    for(var i = 0 ;i<LED_COUNT; i++) {
+      setLed(i, red, green, blue);
+   }
   }
 
   return (
