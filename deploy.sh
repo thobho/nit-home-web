@@ -1,7 +1,7 @@
-git commit -a -m "$0"
-git push
 
 if [ $1 == "-c" ]; then
+    git commit -a -m "$0"
+    git push
     ssh pi@192.168.1.1 git -C /home/pi/Projects/nit-home/nit-home-web pull
 fi
 
