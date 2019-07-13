@@ -8,4 +8,5 @@ fi
 #upload build
 scp -rp build/ pi@192.168.1.1:/home/pi/Projects/nit-home/nit-home-web
 #run server
-ssh pi@192.168.1.1 /home/pi/Projects/nit-home/nit-home-web/run-server.sh
+ssh root@192.168.1.1 chmod +x /home/pi/Projects/nit-home/nit-home-web/run-server.sh
+ssh root@192.168.1.1 /home/pi/Projects/nit-home/nit-home-web/run-server.sh
