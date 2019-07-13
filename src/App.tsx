@@ -18,7 +18,7 @@ function App() {
     setWsClient(new WebSocket("ws://192.168.1.1:8765"))
   }, [])
 
-  const setLed = (id: number, r, g, b) => {
+  const setLed = (id: number, r: number, g: number, b:number) => {
     if (wsClient!.readyState === wsClient!.OPEN) {
       console.log("SENDING...")
       wsClient!.send(`${id} ${r} ${g} ${b}`)
