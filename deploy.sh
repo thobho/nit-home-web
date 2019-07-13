@@ -6,7 +6,8 @@ if [ $1 == "-c" ]; then
 fi
 
 #kill old process
-ssh root@192.168.1.1 killall node | killall python3
+ssh root@192.168.1.1 killall -9 node
+ssh root@192.168.1.1 killall -9 python3
 
 #upload build
 scp -rp build/ pi@192.168.1.1:/home/pi/Projects/nit-home/nit-home-web
